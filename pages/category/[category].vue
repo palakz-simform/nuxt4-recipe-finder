@@ -17,7 +17,7 @@
 
     <!-- Category Recipes -->
     <div v-if="category">
-      <div v-if="recipeStore.isLoading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div v-if="mealsPending" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div 
           v-for="i in 9" 
           :key="i"
@@ -32,16 +32,16 @@
         </div>
       </div>
       
-      <div v-else-if="recipeStore.meals.length" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div v-else-if="mealsData?.data?.meals?.length" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <RecipeCard 
-          v-for="meal in recipeStore.meals"
+          v-for="meal in mealsData.data.meals"
           :key="meal.idMeal"
           :meal="meal"
         />
       </div>
       
-      <div v-else-if="recipeStore.error" class="text-center py-12">
-        <p class="text-red-600 mb-4">{{ recipeStore.error }}</p>
+      <div v-else-if="mealsError" class="text-center py-12">
+        <p class="text-red-600 mb-4">{{ mealsError.message || 'Failed to load recipes' }}</p>
         <button @click="fetchMeals" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200">
           Try Again
         </button>
@@ -71,6 +71,9 @@ const route = useRoute()
 const recipeStore = useRecipeStore()
 
 const category = computed(() => route.params.category)
+const categoryUrl = computed(() => category.value ? `/api/category/${category.value}` : null)
+
+const { data: mealsData, pending: mealsPending, error: mealsError, refresh: refreshMeals } = useFetch(categoryUrl, { immediate: false })
 
 // SEO Meta
 useSeoMeta({
@@ -82,7 +85,7 @@ useSeoMeta({
 
 const fetchMeals = async () => {
   if (category.value) {
-    await recipeStore.fetchMealsByCategory(category.value)
+    await refreshMeals()
   }
 }
 

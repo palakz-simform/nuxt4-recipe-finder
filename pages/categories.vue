@@ -12,13 +12,12 @@
       :categories="recipeStore.categories"
       :is-loading="recipeStore.isLoading"
       :error="recipeStore.error"
-      @category-selected="handleCategorySelected"
-      @retry="fetchCategories"
     />
   </div>
 </template>
 
 <script setup>
+
 // SEO Meta
 useSeoMeta({
   title: 'Recipe Categories - Recipe Finder',
@@ -28,14 +27,6 @@ useSeoMeta({
 const recipeStore = useRecipeStore()
 
 onMounted(async () => {
-  await fetchCategories()
-})
-
-const fetchCategories = async () => {
   await recipeStore.fetchCategories()
-}
-
-const handleCategorySelected = (category) => {
-  navigateTo(`/category/${category}`)
-}
+})
 </script>

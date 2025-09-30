@@ -21,7 +21,7 @@
       <button
         v-for="category in categories"
         :key="category.idCategory"
-        @click="$emit('categorySelected', category.strCategory)"
+        @click="handleCategorySelected( category.strCategory)"
         class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow p-4 text-left group"
       >
         <img 
@@ -38,36 +38,36 @@
     
     <div v-else-if="error" class="text-center py-8">
       <p class="text-red-600 mb-2">{{ error }}</p>
-      <button @click="$emit('retry')" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200">
+      <button @click="fetchCategories" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200">
         Try Again
       </button>
     </div>
   </div>
 </template>
 
-<script setup lang="ts">
-import type { Category } from '../types'
+<script setup>
+const recipeStore = useRecipeStore()
 
-interface Props {
-  categories: Category[]
-  isLoading: boolean
-  error: string | null
+defineProps({
+  categories: {
+    type: Array,
+    required: true
+  },
+  isLoading: {
+    type: Boolean,
+    required: true
+  },
+  error: {
+    type: String,
+    default: null
+  }
+})
+const handleCategorySelected = (category) => {
+  navigateTo(`/category/${category}`)
 }
 
-interface Emits {
-  (e: 'categorySelected', category: string): void
-  (e: 'retry'): void
+const fetchCategories = async () => {
+  await recipeStore.fetchCategories()
 }
 
-defineProps<Props>()
-defineEmits<Emits>()
 </script>
-
-<style scoped>
-.line-clamp-2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-</style>

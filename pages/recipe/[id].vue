@@ -186,10 +186,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
-import { useSeoMeta, useRoute, useFetch } from '#app'
-import { useMeal } from '../../composables/useMeal'
-import { useFavorites } from '../../composables/useFavorites'
+
 const route = useRoute()
 const recipeId = route.params.id 
 

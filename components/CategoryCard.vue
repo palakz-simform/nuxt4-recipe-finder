@@ -25,21 +25,11 @@
   </NuxtLink>
 </template>
 
-<script setup lang="ts">
-import type { Category } from '~/types'
-
-interface Props {
-  category: Category
-}
-
-defineProps<Props>()
+<script setup>
+defineProps({
+  category: {
+    type: Object,
+    required: true
+  }
+})
 </script>
-
-<style scoped>
-.line-clamp-3 {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-</style>
