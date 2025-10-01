@@ -110,12 +110,12 @@ export const useRecipeStore = defineStore('recipe', () => {
 
   return {
     // State
-    meals: readonly(meals),
-    categories: readonly(categories),
-    selectedMeal: readonly(selectedMeal),
-    isLoading: readonly(isLoading),
-    error: readonly(error),
-    searchFilters: readonly(searchFilters),
+    meals,
+    categories,
+    selectedMeal,
+    isLoading,
+    error,
+    searchFilters,
 
     // Getters
     featuredMeals,

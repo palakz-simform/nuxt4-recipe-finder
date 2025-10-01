@@ -21,15 +21,6 @@
     <div class="p-4">
       <h3 class="font-bold text-lg mb-2 line-clamp-2">{{ meal.strMeal }}</h3>
       
-      <div class="flex items-center gap-2 mb-3">
-        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-          {{ meal.strCategory }}
-        </span>
-        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-          {{ meal.strArea }}
-        </span>
-      </div>
-      
       <p v-if="meal.strInstructions" class="text-gray-600 text-sm mb-4 line-clamp-3">
         {{ meal.strInstructions }}
       </p>
